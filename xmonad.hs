@@ -21,7 +21,7 @@ myTerminal              = "term"
 myBorderWidth           = 2
 myNormalBorderColor     = "#202030"
 myFocusedBorderColor    = "#A0A0D0"
-myWorkspaces            = map show [1..9]
+myWorkspaces            = ["pim","web"] ++ map show [3..9]
 statusCmd               = "dzen2 -e 'onstart=lower' -ta l -dock -bg \"#333538\" -h 20 -fg \"#FFFFFF\" -fn '-*-terminus-*-r-*-*-12-*-*-*-*-*-*-*'  -geometry -0+0"
 
 -----------------
@@ -80,9 +80,11 @@ myManageHook = composeAll . concat $
     , [title     =? t --> doFloat       | t <- myFloatsByTitle       ]
     , [className =? c --> doCenterFloat | c <- myCenterFloatsByClass ]
     , [className =? c --> doIgnore      | c <- myIgnoreByClass       ]
+    , [className =? c --> doF (S.shift "web") | c <- myWebByClass      ]
 --  , [className =? "Firefox" && title =? "Save As" --> doCenterFloat]
     ]
     where
+    myWebByClass          = ["Firefox"]
     myFloatsByClass       = []
     myFloatsByTitle       = [ "Firefox - Restore Previous Session"
                             , "Firefox Preferences"
