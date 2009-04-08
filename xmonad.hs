@@ -75,25 +75,16 @@ myMouseBindings (XConfig {XMonad.modMask = modMask}) = M.fromList $
 -- myCenterFloatsByClass: list of window clases to float _and_ center on the screen
 --
 myManageHook :: ManageHook
-myManageHook = composeAll . concat $
-    [ [className =? c --> doFloat       | c <- myFloatsByClass       ]
-    , [title     =? t --> doFloat       | t <- myFloatsByTitle       ]
-    , [className =? c --> doCenterFloat | c <- myCenterFloatsByClass ]
-    , [className =? c --> doIgnore      | c <- myIgnoreByClass       ]
-    , [className =? c --> doF (S.shift "web") | c <- myWebByClass      ]
---  , [className =? "Firefox" && title =? "Save As" --> doCenterFloat]
+myManageHook = composeAll
+    [ className =? "XFontSel"                           --> doCenterFloat
+    , className =? "Restart Firefox"                    --> doCenterFloat
+    , className =? "stalonetray"                        --> doIgnore
+    , className =? "Firefox"                            --> doF (S.shift "web")
+    , className =? "Opera"                              --> doF (S.shift "web")
+    , className =? "opera"                              --> doF (S.shift "web")
+    , title     =? "Firefox - Restore Previous Session" --> doFloat
+    , title     =? "Firefox Preferences"                --> doFloat
     ]
-    where
-    myWebByClass          = ["Firefox"]
-    myFloatsByClass       = []
-    myFloatsByTitle       = [ "Firefox - Restore Previous Session"
-                            , "Firefox Preferences"
-                            ]
-    myCenterFloatsByClass = [ "XFontSel"
-                            , "Restart Firefox"
-                            ]
-    myIgnoreByClass       = [ "stalonetray"
-                            ]
 
 ----------------
 -- Custom Log --
