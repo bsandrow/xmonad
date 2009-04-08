@@ -1,5 +1,8 @@
-conf_target_dir 	= $(HOME)/.xmonad
-script_target_dir 	= $(HOME)/scripts
+PREFIX = $(HOME)
+BINDIR = $(PREFIX)/scripts
+
+conf_target_dir 	= $(PREFIX)/.xmonad
+script_target_dir 	= $(BINDIR)
 target_dirs			= $(script_target_dir) $(conf_target_dir)
 
 conf_src_dir 	= .
