@@ -21,7 +21,7 @@ myTerminal              = "term"
 myBorderWidth           = 2
 myNormalBorderColor     = "#202030"
 myFocusedBorderColor    = "#A0A0D0"
-myWorkspaces            = ["pim","web"] ++ map show [3..9]
+myWorkspaces            = ["web"] ++ map show [2..9]
 statusCmd               = "dzen2 -e 'onstart=lower' -ta l -dock -bg \"#333538\" -h 20 -fg \"#FFFFFF\" -fn '-*-terminus-*-r-*-*-12-*-*-*-*-*-*-*'  -geometry -0+0"
 
 -----------------
@@ -76,14 +76,17 @@ myMouseBindings (XConfig {XMonad.modMask = modMask}) = M.fromList $
 --
 myManageHook :: ManageHook
 myManageHook = composeAll
+    -- rules to float windows outside of tiling management
     [ className =? "XFontSel"                           --> doCenterFloat
     , className =? "Restart Firefox"                    --> doCenterFloat
+    , title     =? "Firefox - Restore Previous Session" --> doFloat
+    , title     =? "Firefox Preferences"                --> doFloat
+    -- rules to exclude windows from management
     , className =? "stalonetray"                        --> doIgnore
+    -- rules to automatically move windows to certain workspaces
     , className =? "Firefox"                            --> doF (S.shift "web")
     , className =? "Opera"                              --> doF (S.shift "web")
     , className =? "opera"                              --> doF (S.shift "web")
-    , title     =? "Firefox - Restore Previous Session" --> doFloat
-    , title     =? "Firefox Preferences"                --> doFloat
     ]
 
 ----------------
