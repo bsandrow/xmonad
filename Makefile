@@ -1,13 +1,13 @@
 PREFIX = $(HOME)
 BINDIR = $(PREFIX)/scripts
 
-conf_target_dir 	= $(PREFIX)/.xmonad
-script_target_dir 	= $(BINDIR)
-target_dirs			= $(script_target_dir) $(conf_target_dir)
+conf_target_dir   = $(PREFIX)/.xmonad
+script_target_dir = $(BINDIR)
+target_dirs       = $(script_target_dir) $(conf_target_dir)
 
-conf_src_dir 	= .
-script_src_dir 	= scripts
-src_dirs		= $(script_src_dir) $(conf_src_dir)
+conf_src_dir  = .
+script_src_dir= scripts
+src_dirs      = $(script_src_dir) $(conf_src_dir)
 
 script_targets = $(addprefix $(script_target_dir)/, $(scripts))
 script_srcs    = $(addprefix $(script_src_dir)/,    $(scripts))
