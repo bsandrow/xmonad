@@ -1,0 +1,18 @@
+Install
+-------
+
+    $ cd path/to/repo/xmonad
+    $ make install
+
+Also note that '~/scripts' has to be in your path, or you can redefine the BINDIR by installing like so:
+
+    $ cd path/to/repo/xmonad
+    $ make 'BINDIR=$(PREFIX)/bin' install
+
+Files
+-----
+
+__xmonad.hs__ The config file
+__bak__ Where unsed files go to die
+__scripts__ Helper scripts to my Xmonad setup
+__Makefile__ self-explanatory
