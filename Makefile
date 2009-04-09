@@ -27,8 +27,8 @@ install: $(target_dirs) $(script_targets) $(conf_targets)
 $(target_dirs):
 	mkdir -p $@
 
-$(conf_targets): $(conf_srcs)
-	cp $? $(conf_target_dir)/
+$(conf_target_dir)/%: $(conf_src_dir)/%
+	cp $< $(conf_target_dir)/
 
-$(script_targets): $(script_srcs)
-	cp $? $(script_target_dir)/
+$(script_target_dir)/%: $(script_src_dir)/%
+	cp $< $(script_target_dir)/
