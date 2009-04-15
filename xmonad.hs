@@ -47,6 +47,7 @@ myKeys conf =
     , ((myModMask,              xK_c     ), kill)                               -- close current window
     , ((myModMask,              xK_f     ), withFocused $ windows . S.sink)     -- de-float the window
     , ((myModMask,              xK_l     ), spawn "xscreensaver-command -lock")                      -- run 'slock' to lock the screen
+    , ((myModMask .|. altMask,  xK_Tab   ), nextScreen)                         -- cycle to the next screen
     ] ++
     [ ((altMask, k), windows $ S.greedyView i)
         | (i,k) <- zip myWorkspaces workspaceKeys
