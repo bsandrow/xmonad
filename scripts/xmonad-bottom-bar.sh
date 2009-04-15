@@ -1,21 +1,27 @@
 #!/bin/bash
 #
 
-# Loop Vars
-email_interval=60
-clock_interval=1
+### global settings
 max_reset_interval=60
 
-# Dzen Settings
+### email settings
+email_interval=60
+email_newmail_fgcolor='red'
+email_fgcolor='green'
+
+# dzen Settings
 DZEN=`which dzen2`
 FONT='-*-terminus-*-r-*-*-12-*-*-*-*-*-*-*'
 HEIGHT='14'
-JUSTIFICATION='r'
+JUSTIFICATION='l'
 FOREGROUND_COLOR="FFFFFF"
 BACKGROUND_COLOR="111321"
 BEHAVIOR='onstart=lower'
 GEOMETRY='+0+754'
 
+### clock settings
+clock_fgcolor='yellow'
+clock_interval=1
 
 function get_mail_count()
 {
@@ -41,29 +47,33 @@ function get_all_mail()
     echo $(($new_mail + $cur_mail + $tmp_mail))
 }
 
+function process_mailbox()
+{
+    ### options
+    mailbox="$1"; label="$2"; alerts_toggle=$3
+    ### mail counts
+    new_mail=`get_new_mail "$mailbox"`
+    all_mail=`get_all_mail "$mailbox"`
+    ### output
+    if [ $new_mail -ne 0 ] && [ $3 -eq 1 ]; then
+        echo -n "[^fg($email_newmail_fgcolor)$label $new_mail/$all_mail^fg()] "
+    else
+        echo -n "[^fg($email_fgcolor)$label $new_mail/$all_mail^fg()] "
+    fi
+}
+
 function print_email()
 {
-    new_mail=`get_new_mail ~/mail/gmail/INBOX`
-    all_mail=`get_all_mail ~/mail/gmail/INBOX`
-    echo -n "[gmail $new_mail/$all_mail]"
-
-    new_mail=`get_new_mail ~/mail/rtk/INBOX`
-    all_mail=`get_all_mail ~/mail/rtk/INBOX`
-    echo -n " [rtk $new_mail/$all_mail]"
-
-    new_mail=`get_new_mail ~/mail/gmail/lists.xmonad`
-    all_mail=`get_all_mail ~/mail/gmail/lists.xmonad`
-    echo -n " [xmonad $new_mail/$all_mail]"
-
-    new_mail=`get_new_mail ~/mail/gmail/lists.vim_use`
-    all_mail=`get_all_mail ~/mail/gmail/lists.vim_use`
-    echo -n " [vim $new_mail/$all_mail]"
+    process_mailbox "$HOME/mail/gmail/INBOX" "gmail" 1
+    process_mailbox "$HOME/mail/rtk/INBOX" "rtk" 1
+    process_mailbox "$HOME/mail/gmail/lists.xmonad" "xmonad" 0
+    process_mailbox "$HOME/mail/gmail/lists.vim_use" "vim" 0
 }
 
 
 function print_clock()
 {
-    echo -n `date '+[ %a %b %d %Y | %k:%M (%Z) ]'`
+    echo -n `date "+[ ^fg($clock_fgcolor)%a %b %d %Y^fg() | ^fg($clock_fgcolor)%k:%M (%Z)^fg() ]"`
 }
 
 count=0
@@ -74,7 +84,7 @@ do
     [ $(( $count % $clock_interval ))     == 0 ] && clock_string=`print_clock`
     [ $(( $count % $email_interval ))     == 0 ] && email_string=`print_email`
     [ $(( $count % $max_reset_interval )) == 0 ] && count=0
-    echo "$email_string $clock_string"
+    echo "$clock_string $email_string"
     count=$(( $count + 1 ))
     sleep 1
 done | $DZEN -dock                          \
