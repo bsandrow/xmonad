@@ -1,0 +1,7 @@
+============================================================
+Get the processor usage on xmonad-bottom-bar.sh down. Creating
+some sort of event-loop with callback hooks, scheduled
+wake-ups and the possibility of needing to port this to perl
+or python (or C). Would like to generalize it as much as
+possible so that it's not only "you can with with this
+only the things that I care about"
