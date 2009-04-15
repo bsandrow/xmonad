@@ -1,11 +1,7 @@
 #!/bin/bash
 #
 
-### global settings
-max_reset_interval=60
-
 ### email settings
-email_interval=60
 email_newmail_fgcolor='red'
 email_fgcolor='green'
 
@@ -21,7 +17,6 @@ GEOMETRY='+0+754'
 
 ### clock settings
 clock_fgcolor='yellow'
-clock_interval=1
 
 function get_mail_count()
 {
@@ -77,16 +72,41 @@ function print_clock()
 }
 
 count=0
+interval=0
+intervals=(0 0)
+clock_idx=0
+email_idx=1
 while true
 do
+    # update all intervals by the amount of time that has elapsed.
+    i=0
+    while [ $i -lt ${#intervals[*]} ];do
+        intervals[$i]=$(( ${intervals[$i]} - $interval ))
+        i=$(( $i + 1 ))
+    done
+
     # update each peice of information when the interval comes around, reset
     # the interval counter when we reach the max interval value
-    [ $(( $count % $clock_interval ))     == 0 ] && clock_string=`print_clock`
-    [ $(( $count % $email_interval ))     == 0 ] && email_string=`print_email`
-    [ $(( $count % $max_reset_interval )) == 0 ] && count=0
+    if [ ${intervals[$clock_idx]} -le 0 ]; then
+        clock_string=`print_clock`
+        unix_time=`date +%s`
+        intervals[$clock_idx]=$(( 60 - $unix_time % 60 ))
+    fi
+    if [ ${intervals[$email_idx]} -le 0 ]; then
+        email_string=`print_email`
+        intervals[$email_idx]=60
+    fi
     echo "$clock_string $email_string"
-    count=$(( $count + 1 ))
-    sleep 1
+
+    # determine the shortest interval before the next update needs to occur
+    # and then set that to the sleep interval
+    interval=${intervals[0]}
+    for i in ${intervals[@]}; do
+        if [ $i -lt $interval ]; then
+            interval=$i
+        fi
+    done
+    sleep $interval
 done | $DZEN -dock                          \
              -fg        "#$FOREGROUND_COLOR"\
              -bg        "#$BACKGROUND_COLOR"\
