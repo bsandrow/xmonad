@@ -18,9 +18,9 @@ import System.IO
 --      Customizations --
 -------------------------
 myTerminal              = "term"
-myBorderWidth           = 2
+myBorderWidth           = 4
 myNormalBorderColor     = "#202030"
-myFocusedBorderColor    = "#A0A0D0"
+myFocusedBorderColor    = "#0A0AD0"
 myWorkspaces            = ["web"] ++ map show [2..9]
 statusCmd               = "dzen2 -e 'onstart=lower' -ta l -dock -bg \"#333538\" -h 20 -fg \"#FFFFFF\" -fn '-*-terminus-*-r-*-*-12-*-*-*-*-*-*-*'  -geometry -0+0"
 
