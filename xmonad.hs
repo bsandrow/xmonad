@@ -46,7 +46,7 @@ myKeys conf =
     , ((myModMask .|. shiftMask,xK_Tab   ), prevWS)                             -- cycle back 1 workspace
     , ((myModMask,              xK_c     ), kill)                               -- close current window
     , ((myModMask,              xK_f     ), withFocused $ windows . S.sink)     -- de-float the window
-    , ((myModMask,              xK_l     ), spawn "xscreensaver-command -lock")                      -- run 'slock' to lock the screen
+    , ((myModMask .|. shiftMask,xK_l     ), spawn "slock")                      -- run 'slock' to lock the screen
     , ((myModMask .|. altMask,  xK_Tab   ), nextScreen)                         -- cycle to the next screen
     ] ++
     [ ((altMask, k), windows $ S.greedyView i)
