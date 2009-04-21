@@ -1,34 +1,17 @@
 PREFIX = $(HOME)
 BINDIR = $(PREFIX)/scripts
+XMONADDIR = $(PREFIX)/.xmonad
 
-conf_target_dir   = $(PREFIX)/.xmonad
-script_target_dir = $(BINDIR)
-target_dirs       = $(script_target_dir) $(conf_target_dir)
+install: install_scripts install_config
 
-conf_src_dir  = .
-script_src_dir= scripts
-src_dirs      = $(script_src_dir) $(conf_src_dir)
+install_scripts:
+	@echo Installing xmonad scripts to $(BINDIR)/
+	@mkdir -p "$(BINDIR)"
+	@cp -f scripts/*
 
-script_targets = $(addprefix $(script_target_dir)/, $(scripts))
-script_srcs    = $(addprefix $(script_src_dir)/,    $(scripts))
-conf_targets   = $(addprefix $(conf_target_dir)/, $(confs))
-conf_srcs      = $(addprefix $(conf_src_dir)/,    $(confs))
+install_config:
+	@echo Installing xmonad config to $(XMONADDIR)/
+	@mkdir -p "$(XMONADDIR)"
+	@cp -f xmonad.hs "$(XMONADDIR)/"
 
-confs = \
-	xmonad.hs
-
-scripts = \
-	xmonad-bottom-bar.sh\
-	xmonad-startup.sh
-
-
-install: $(target_dirs) $(script_targets) $(conf_targets)
-
-$(target_dirs):
-	mkdir -p $@
-
-$(conf_target_dir)/%: $(conf_src_dir)/%
-	cp $< $(conf_target_dir)/
-
-$(script_target_dir)/%: $(script_src_dir)/%
-	cp $< $(script_target_dir)/
+.PHONY: install_config install_scripts install
