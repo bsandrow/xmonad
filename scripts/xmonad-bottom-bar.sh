@@ -3,7 +3,7 @@
 
 ### email settings
 email_newmail_fgcolor='red'
-email_fgcolor='green'
+email_fgcolor=''
 
 # dzen Settings
 DZEN=`which dzen2`
@@ -16,7 +16,7 @@ BEHAVIOR='onstart=lower'
 GEOMETRY='+0+754'
 
 ### clock settings
-clock_fgcolor='yellow'
+clock_fgcolor='#55CC55'
 clock_format="+^fg($clock_fgcolor)%a %b %d %Y^fg() | ^fg($clock_fgcolor)%k:%M (%Z)^fg() "
 
 function get_mail_count()
