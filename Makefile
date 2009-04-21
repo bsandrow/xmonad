@@ -7,7 +7,7 @@ install: install_scripts install_config
 install_scripts:
 	@echo Installing xmonad scripts to $(BINDIR)/
 	@mkdir -p "$(BINDIR)"
-	@cp -f scripts/*
+	@cp -f scripts/* $(BINDIR)/
 
 install_config:
 	@echo Installing xmonad config to $(XMONADDIR)/
