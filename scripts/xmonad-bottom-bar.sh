@@ -17,6 +17,7 @@ GEOMETRY='+0+754'
 
 ### clock settings
 clock_fgcolor='yellow'
+clock_format="+^fg($clock_fgcolor)%a %b %d %Y^fg() | ^fg($clock_fgcolor)%k:%M (%Z)^fg() "
 
 function get_mail_count()
 {
@@ -51,9 +52,9 @@ function process_mailbox()
     all_mail=`get_all_mail "$mailbox"`
     ### output
     if [ $new_mail -ne 0 ] && [ $3 -eq 1 ]; then
-        echo -n "[^fg($email_newmail_fgcolor)$label $new_mail/$all_mail^fg()] "
+        echo -n "| ^fg($email_newmail_fgcolor)$label $new_mail/$all_mail^fg() "
     else
-        echo -n "[^fg($email_fgcolor)$label $new_mail/$all_mail^fg()] "
+        echo -n "| ^fg($email_fgcolor)$label $new_mail/$all_mail^fg() "
     fi
 }
 
@@ -68,7 +69,7 @@ function print_email()
 
 function print_clock()
 {
-    echo -n `date "+[ ^fg($clock_fgcolor)%a %b %d %Y^fg() | ^fg($clock_fgcolor)%k:%M (%Z)^fg() ]"`
+    echo -n `date "$clock_format"`
 }
 
 count=0
@@ -96,7 +97,7 @@ do
         email_string=`print_email`
         intervals[$email_idx]=60
     fi
-    echo "$clock_string $email_string"
+    echo " $clock_string $email_string"
 
     # determine the shortest interval before the next update needs to occur
     # and then set that to the sleep interval
