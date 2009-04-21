@@ -62,8 +62,6 @@ function print_email()
 {
     process_mailbox "$HOME/mail/gmail/INBOX" "gmail" 1
     process_mailbox "$HOME/mail/rtk/INBOX" "rtk" 1
-    process_mailbox "$HOME/mail/gmail/lists.xmonad" "xmonad" 0
-    process_mailbox "$HOME/mail/gmail/lists.vim_use" "vim" 0
 }
 
 
