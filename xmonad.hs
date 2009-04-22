@@ -3,9 +3,10 @@ import XMonad.ManageHook
 import XMonad.Actions.CycleWS
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageDocks
-import XMonad.Hooks.ManageHelpers(doCenterFloat)
+import XMonad.Hooks.ManageHelpers(doCenterFloat,isFullscreen,doFullFloat)
 import XMonad.Util.WindowProperties
 import XMonad.Layout.WindowNavigation
+import XMonad.Layout.NoBorders
 import Control.Monad
 import XMonad.Util.Run(spawnPipe)
 import qualified XMonad.StackSet as S
@@ -23,6 +24,7 @@ myNormalBorderColor     = "#202030"
 myFocusedBorderColor    = "#0A0AD0"
 myWorkspaces            = ["web","comm"] ++ map show [3..6]
 statusCmd               = "xmonad-main-bar.sh"
+fullFloatOn             = 0
 
 -----------------
 --    Custom   --
@@ -45,7 +47,7 @@ myKeys conf =
     , ((myModMask,              xK_Tab   ), nextWS)                             -- cycle forward 1 workspace
     , ((myModMask .|. shiftMask,xK_Tab   ), prevWS)                             -- cycle back 1 workspace
     , ((myModMask,              xK_x     ), kill)                               -- close current window
-    , ((myModMask,              xK_f     ), withFocused $ windows . S.sink)     -- de-float the window
+--  , ((myModMask,              xK_f     ), withFocused $ doFullFloat)          -- de-float the window
     , ((myModMask .|. shiftMask,xK_l     ), spawn "slock")                      -- run 'slock' to lock the screen
     , ((myModMask .|. altMask,  xK_Tab   ), nextScreen)                         -- cycle to the next screen
     ] ++
@@ -84,6 +86,7 @@ myManageHook = composeAll
     , className =? "opera"                              --> doF (S.shift "web")
     ]
 
+myOtherManageHook = composeOne [ isFullscreen -?> doFullFloat ]
 ----------------
 -- Custom Log --
 --   Output   --
@@ -121,6 +124,6 @@ main = do
         , focusedBorderColor    = myFocusedBorderColor
         , modMask               = myModMask
         , layoutHook            = avoidStruts $ layoutHook defaultConfig
-        , manageHook            = myManageHook <+> manageHook defaultConfig <+> manageDocks
+        , manageHook            = manageDocks <+> myOtherManageHook <+> myManageHook <+> manageHook defaultConfig
         , logHook               = dynamicLogWithPP $ myDzenPP dzenproc
         }
