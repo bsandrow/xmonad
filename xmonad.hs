@@ -34,7 +34,7 @@ altMask   = mod1Mask
 
 myKeys conf =
     [ ((myModMask,              xK_Return), spawn $ XMonad.terminal conf)       -- launch terminal
-    , ((myModMask,              xK_p     ), spawn $ "gmrun")                    -- launch gmrun
+    , ((myModMask,              xK_c     ), spawn $ "gmrun")                    -- launch gmrun
     , ((altMask,                xK_Tab   ), windows S.focusDown)                -- cycle down from window
     , ((altMask .|. shiftMask,  xK_Tab   ), windows S.focusUp)                  -- cycle up from window
     , ((myModMask,              xK_Down  ), windows S.swapDown)                 -- move window down in layout
@@ -44,7 +44,7 @@ myKeys conf =
     , ((myModMask,              xK_space ), sendMessage NextLayout)             -- cycle through layouts
     , ((myModMask,              xK_Tab   ), nextWS)                             -- cycle forward 1 workspace
     , ((myModMask .|. shiftMask,xK_Tab   ), prevWS)                             -- cycle back 1 workspace
-    , ((myModMask,              xK_c     ), kill)                               -- close current window
+    , ((myModMask,              xK_x     ), kill)                               -- close current window
     , ((myModMask,              xK_f     ), withFocused $ windows . S.sink)     -- de-float the window
     , ((myModMask .|. shiftMask,xK_l     ), spawn "slock")                      -- run 'slock' to lock the screen
     , ((myModMask .|. altMask,  xK_Tab   ), nextScreen)                         -- cycle to the next screen
