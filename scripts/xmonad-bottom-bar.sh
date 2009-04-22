@@ -52,9 +52,9 @@ function process_mailbox()
     all_mail=`get_all_mail "$mailbox"`
     ### output
     if [ $new_mail -ne 0 ] && [ $3 -eq 1 ]; then
-        echo -n "| ^fg($email_newmail_fgcolor)$label $new_mail/$all_mail^fg() "
+        echo -n "| ^fg($email_newmail_fgcolor)$label: $new_mail/$all_email^fg() "
     else
-        echo -n "| ^fg($email_fgcolor)$label $new_mail/$all_mail^fg() "
+        echo -n "| ^fg($email_fgcolor)$label: $new_mail/$all_email^fg() "
     fi
 }
 
