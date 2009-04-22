@@ -1,14 +1,17 @@
 import XMonad
 import XMonad.ManageHook
 import XMonad.Actions.CycleWS
+import XMonad.Util.WindowProperties
+import XMonad.Util.Run(spawnPipe)
+
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageDocks
-import XMonad.Hooks.ManageHelpers(doCenterFloat,isFullscreen,doFullFloat)
-import XMonad.Util.WindowProperties
+import XMonad.Hooks.ManageHelpers
+
 import XMonad.Layout.WindowNavigation
 import XMonad.Layout.NoBorders
+
 import Control.Monad
-import XMonad.Util.Run(spawnPipe)
 import qualified XMonad.StackSet as S
 import qualified Data.Map as M
 import System.IO
@@ -100,9 +103,9 @@ myDzenPP dzfh = defaultPP
             , ppSep                 = " ^r(3x3) "
             , ppWsSep               = ""
             , ppLayout              = (\x -> case x of
-                                                "Tall"   -> "^i(/home/bjs/local/dzen_bitmaps/tall.xbm)"
-                                                "Mirror" -> "^i(/home/bjs/local/dzen_bitmaps/mtall.xbm)"
-                                                x        -> x
+                                                "Tall"        -> "^i(/home/bjs/local/dzen_bitmaps/tall.xbm)"
+                                                "Mirror Tall" -> "^i(/home/bjs/local/dzen_bitmaps/mtall.xbm)"
+                                                x             -> x
                                       )
             , ppTitle               = wrap "< " " >" 
             , ppOutput              = hPutStrLn dzfh
