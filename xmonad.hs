@@ -22,7 +22,7 @@ myBorderWidth           = 4
 myNormalBorderColor     = "#202030"
 myFocusedBorderColor    = "#0A0AD0"
 myWorkspaces            = ["web","comm"] ++ map show [3..6]
-statusCmd               = "dzen2 -e 'onstart=lower' -ta l -dock -bg \"#333538\" -h 20 -fg \"#FFFFFF\" -fn '-*-terminus-*-r-*-*-12-*-*-*-*-*-*-*'  -geometry -0+0"
+statusCmd               = "xmonad-main-bar.sh"
 
 -----------------
 --    Custom   --
@@ -59,12 +59,6 @@ myKeys conf =
 
 myKeysFunc x = M.union (M.fromList (myKeys x)) (keys defaultConfig x)
 
-
--- Mouse
-
-myMouseBindings (XConfig {XMonad.modMask = modMask}) = M.fromList $
-    [ ((modMask, button1), (\w -> focus w >> mouseMoveWindow w))
-    ]
 ----------------
 --   Custom   --
 --   Window   --
@@ -129,5 +123,4 @@ main = do
         , layoutHook            = avoidStruts $ layoutHook defaultConfig
         , manageHook            = myManageHook <+> manageHook defaultConfig <+> manageDocks
         , logHook               = dynamicLogWithPP $ myDzenPP dzenproc
-        , mouseBindings         = myMouseBindings
         }
