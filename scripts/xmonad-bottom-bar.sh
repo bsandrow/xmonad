@@ -1,6 +1,19 @@
 #!/bin/bash
 #
 
+if [ "$1" == "--kill" ]; then
+    ps -C xmonad-bottom-bar.sh -o pid | egrep -v "(PID|$$)" | while read process
+    do
+        child=`ps --ppid $process -o pid,command | grep sleep | cut -d' ' -f1`
+        [ -z "$child" ] && continue
+        kill $process
+        [ $? -ne 0 ] && exit 1
+        kill $child
+        [ $? -ne 0 ] && exit 1
+    done
+    exit
+fi
+
 ### email settings
 email_newmail_fgcolor='red'
 email_fgcolor=''
@@ -12,7 +25,7 @@ HEIGHT='14'
 JUSTIFICATION='l'
 FOREGROUND_COLOR="FFFFFF"
 BACKGROUND_COLOR="111321"
-BEHAVIOR='onstart=lower'
+BEHAVIOR=''
 GEOMETRY='+0+754'
 
 ### clock settings
@@ -52,9 +65,9 @@ function process_mailbox()
     all_mail=`get_all_mail "$mailbox"`
     ### output
     if [ $new_mail -ne 0 ] && [ $3 -eq 1 ]; then
-        echo -n "| ^fg($email_newmail_fgcolor)$label: $new_mail/$all_email^fg() "
+        echo -n "| ^fg($email_newmail_fgcolor)$label: $new_mail/$all_mail^fg() "
     else
-        echo -n "| ^fg($email_fgcolor)$label: $new_mail/$all_email^fg() "
+        echo -n "| ^fg($email_fgcolor)$label: $new_mail/$all_mail^fg() "
     fi
 }
 
