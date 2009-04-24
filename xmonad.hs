@@ -25,8 +25,21 @@ myBorderWidth           = 4
 myNormalBorderColor     = "#202030"
 myFocusedBorderColor    = "#0A0AD0"
 myWorkspaces            = ["web","comm"] ++ map show [3..6]
-statusCmd               = "xmonad-main-bar.sh"
 fullFloatOn             = 0
+
+---------------------
+-- Execute Strings --
+---------------------
+
+commonBarFont   = "-*-terminus-*-r-*-*-12-*-*-*-*-*-*-*"
+upperBarFgColor = "#FFFFFF"
+upperBarBgColor = "#333538"
+lowerBarFgColor = "#FFFFFF"
+lowerBarBgColor = "#111321"
+upperBarCmd     = "dzen2 -ta l -dock -h 20 -geometry -0+0   -bg '" ++ upperBarBgColor ++ "' -fg '" ++ upperBarFgColor ++ "' -fn '" ++ commonBarFont ++ "'" 
+lowerBarCmd     = "bash ~/scripts/xmonad-bottom-bar.sh | dzen2 -ta l -dock -h 14 -geometry +0+754 -bg '" ++ lowerBarBgColor ++ "' -fg '" ++ lowerBarFgColor ++ "' -fn '" ++ commonBarFont ++ "'"
+trayKillCmd     = "kill -9 `ps -C stalonetray -o pid,user h|grep bjs|sed 's:^ *::g'|cut -d' ' -f1|awk '{ print $1\" \"; }'`"
+trayCmd         = "sleep 1 && stalonetray"
 
 ------------------------
 -- Custom KeyBindings --
@@ -109,7 +122,10 @@ myDzenPP dzfh = defaultPP
 -- Main Function Definition --
 ------------------------------
 main = do
-    dzenproc <- spawnPipe statusCmd
+    dzenproc <- spawnPipe upperBarCmd
+    proc1    <- spawnPipe trayKillCmd
+    proc2    <- spawnPipe trayCmd
+    proc3    <- spawnPipe lowerBarCmd
     xmonad $ defaultConfig
         { keys                  = myKeysFunc
         , terminal              = myTerminal

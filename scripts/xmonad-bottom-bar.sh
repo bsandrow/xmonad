@@ -1,36 +1,19 @@
 #!/bin/bash
 #
 
-if [ "$1" == "--kill" ]; then
-    ps -C xmonad-bottom-bar.sh -o pid | egrep -v "(PID|$$)" | while read process
-    do
-        child=`ps --ppid $process -o pid,command | grep sleep | cut -d' ' -f1`
-        [ -z "$child" ] && continue
-        kill $process
-        [ $? -ne 0 ] && exit 1
-        kill $child
-        [ $? -ne 0 ] && exit 1
-    done
-    exit
-fi
+### globals
+separator=" ^r(3x3) "
+dzen_bitmaps="$HOME/local/dzen_bitmaps"
+dzen_bitmaps2="$HOME/local/dzen_bitmaps2"
 
 ### email settings
 email_newmail_fgcolor='red'
 email_fgcolor=''
 
-# dzen Settings
-DZEN=`which dzen2`
-FONT='-*-terminus-*-r-*-*-12-*-*-*-*-*-*-*'
-HEIGHT='14'
-JUSTIFICATION='l'
-FOREGROUND_COLOR="FFFFFF"
-BACKGROUND_COLOR="111321"
-BEHAVIOR=''
-GEOMETRY='+0+754'
-
 ### clock settings
 clock_fgcolor='#55CC55'
-clock_format="+^fg($clock_fgcolor)%a %b %d %Y^fg() | ^fg($clock_fgcolor)%k:%M (%Z)^fg() "
+clock_icon_color='#FFFFFF'
+clock_format="+%a %b %d %Y, %k:%M (%Z)"
 
 function get_mail_count()
 {
@@ -65,22 +48,26 @@ function process_mailbox()
     all_mail=`get_all_mail "$mailbox"`
     ### output
     if [ $new_mail -ne 0 ] && [ $3 -eq 1 ]; then
-        echo -n "| ^fg($email_newmail_fgcolor)$label: $new_mail/$all_mail^fg() "
+        echo -n "^fg($email_newmail_fgcolor)$label: $new_mail/$all_mail^fg()"
     else
-        echo -n "| ^fg($email_fgcolor)$label: $new_mail/$all_mail^fg() "
+        echo -n "^fg($email_fgcolor)$label: $new_mail/$all_mail^fg()"
     fi
 }
 
 function print_email()
 {
+    echo -n "^i($dzen_bitmaps/envelope.xbm) "
     process_mailbox "$HOME/mail/gmail/INBOX" "gmail" 1
+    echo -n " "
     process_mailbox "$HOME/mail/rtk/INBOX" "rtk" 1
 }
 
 
 function print_clock()
 {
+    echo -n "^fg($clock_icon_color)^i($dzen_bitmaps2/clock.xbm)^fg($clock_fgcolor) "
     echo -n `date "$clock_format"`
+    echo -n "^fg()"
 }
 
 count=0
@@ -108,7 +95,7 @@ do
         email_string=`print_email`
         intervals[$email_idx]=60
     fi
-    echo " $clock_string $email_string"
+    echo "$clock_string$separator$email_string"
 
     # determine the shortest interval before the next update needs to occur
     # and then set that to the sleep interval
@@ -119,24 +106,4 @@ do
         fi
     done
     sleep $interval
-done | $DZEN -dock                          \
-             -fg        "#$FOREGROUND_COLOR"\
-             -bg        "#$BACKGROUND_COLOR"\
-             -geometry  "$GEOMETRY"         \
-             -fn        "$FONT"             \
-             -ta        $JUSTIFICATION      \
-             -e         "$BEHAVIOR"         \
-             -h         $HEIGHT 
-# note:
-#   dzen did *NOT* like parsing my X11 geometry string when I tried to use -0
-#   to put it at the bottom of the screen. I had to take the total screen
-#   height (768) and subtract out the height of the dock (14) which is annoying
-#   and hackish
-
-# note2:
-#   apparently BG_COLOR and FG_COLOR don't work well with dzen. When I used
-#   those names to store the colors, dzen woulc choke completely spouting
-#   errors that the vars were empty, but when I echo'd their values from within
-#   the script, I would get the correct text back. But when I Changed the
-#   variable names it magically started working. This could be a bash or sh
-#   bug/feature
+done
