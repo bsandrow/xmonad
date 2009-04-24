@@ -16,11 +16,10 @@ import qualified XMonad.StackSet as S
 import qualified Data.Map as M
 import System.IO
 
--------------------------
--- Simple              --
---    Variable         --
---      Customizations --
--------------------------
+--------------------
+-- Customizations --
+--------------------
+
 myTerminal              = "term"
 myBorderWidth           = 4
 myNormalBorderColor     = "#202030"
@@ -29,10 +28,9 @@ myWorkspaces            = ["web","comm"] ++ map show [3..6]
 statusCmd               = "xmonad-main-bar.sh"
 fullFloatOn             = 0
 
------------------
---    Custom   --
--- KeyBindings --
------------------
+------------------------
+-- Custom KeyBindings --
+------------------------
 
 myModMask = mod4Mask
 altMask   = mod1Mask
@@ -64,16 +62,10 @@ myKeys conf =
 
 myKeysFunc x = M.union (M.fromList (myKeys x)) (keys defaultConfig x)
 
-----------------
---   Custom   --
---   Window   --
--- Management --
-----------------
---
--- myFloatsByClass      : list of window classes to match against for floating
--- myFloatsByTitle      : list of window titles to match against for floating
--- myCenterFloatsByClass: list of window clases to float _and_ center on the screen
---
+------------------------------
+-- Custom Window Management --
+------------------------------
+
 myManageHook :: ManageHook
 myManageHook = composeAll
     -- rules to float windows outside of tiling management
@@ -90,11 +82,11 @@ myManageHook = composeAll
     ]
 
 myOtherManageHook = composeOne [ isFullscreen -?> doFullFloat ]
+
 ----------------
 -- Custom Log --
 --   Output   --
 ----------------
-                                                         -- #a6c292
 -- I want to move the logHook definition here if possible
 myDzenPP dzfh = defaultPP
             { ppCurrent             = wrap "^fg(#000000)^bg(#a3ef5d) " " ^fg()^bg()"
@@ -113,11 +105,9 @@ myDzenPP dzfh = defaultPP
             , ppOutput              = hPutStrLn dzfh
             }
 
--------------------
--- Main          --
---  Function     --
---    Definition --
--------------------
+------------------------------
+-- Main Function Definition --
+------------------------------
 main = do
     dzenproc <- spawnPipe statusCmd
     xmonad $ defaultConfig
