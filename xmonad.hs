@@ -97,7 +97,8 @@ myOtherManageHook = composeOne [ isFullscreen -?> doFullFloat ]
                                                          -- #a6c292
 -- I want to move the logHook definition here if possible
 myDzenPP dzfh = defaultPP
-            { ppCurrent             = wrap "^fg(#000000)^bg(#A0A0D0) " " ^fg()^bg()"
+            { ppCurrent             = wrap "^fg(#000000)^bg(#a3ef5d) " " ^fg()^bg()"
+            , ppVisible             = wrap "^bg(grey30)^fg(grey75)" "^fg()^bg()"
             , ppHidden              = wrap "^i(/home/bjs/local/dzen_bitmaps/has_win_nv.xbm)" " "
             , ppHiddenNoWindows     = wrap " " " "
             , ppSep                 = " ^r(3x3) "
@@ -107,7 +108,8 @@ myDzenPP dzfh = defaultPP
                                                 "Mirror Tall" -> "^i(/home/bjs/local/dzen_bitmaps/mtall.xbm)"
                                                 x             -> x
                                       )
-            , ppTitle               = wrap "< " " >" 
+            , ppTitle               = dzenColor "#a3ef5d" "" . shorten 80
+--            , ppTitle               = wrap "<^fg(#a3ef5d) " " ^fg()>"
             , ppOutput              = hPutStrLn dzfh
             }
 
