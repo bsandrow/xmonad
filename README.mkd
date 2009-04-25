@@ -13,5 +13,7 @@ Files
 -----
  * __xmonad.hs__ The config file
  * __bak__ Where unsed files go to die
+ * __examples__ Copies of XMonad configs I've found on the web (I try to keep the URL/author information with them, but at least I don't claim they mine. They are just my inspiration)
  * __scripts__ Helper scripts to my Xmonad setup
  * __Makefile__ self-explanatory
+
