@@ -1,13 +1,12 @@
-x_startup_script=`which startup-x11.sh`
-if [ -x $x_startup_script ]; then
-    $x_startup_script
-else
-    urxvtd -o -q -f
-fi
+#!/bin/sh
 
+# urxvt daemon
+urxvtd -o -q -f
 
-# Startup backgroud processes
+# xscreensaver
 xscreensaver &
+
+# gpg agent
 GPG_AGENT_INFO_FILE="$HOME/.gpg-agent-info"
 if [ -f "$GPG_AGENT_INFO_FILE" ] && [ ! -r "$GPG_AGENT_INFO_FILE" ]; then
     echo "'$GPG_AGENT_INFO_FILE' exists but is unreadable. Aborting gpg-agent launch..."
@@ -19,22 +18,19 @@ else
     echo $GPG_AGENT_INFO >$GPG_AGENT_INFO_FILE
 fi
 
-# Reset settings for my Xmonad environment (in case they were muxed with if I
-# log into another environment)
-nautilus-show-desktop.sh off
+# make sure nautilus doesn't want to draw the desktop if I launch it
+nautilus-show-desktop.sh OFF
 
-# Startup graphical elements
-xmonad-bottom-bar.sh &
+# background image
 [ -e $HOME/.fehbg ]; eval "`cat $HOME/.fehbg | egrep '^feh .*--bg-' | sed 's:^\\([^;|&]*\\).*$:\1:'`"
 
-# Startup system tray applications
+# systray apps
 (
-    stalonetray &
-    sleep 1s
+    sleep 2s
     update-notifier&
     nm-applet&
     gnome-power-manager&
 ) &
 
-# finally, launch xmonad (with ssh-agent and dbus)
+# xmonad, dbus and ssh-agent
 exec dbus-launch --exit-with-session ssh-agent xmonad
