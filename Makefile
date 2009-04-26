@@ -2,16 +2,9 @@ PREFIX = $(HOME)
 BINDIR = $(PREFIX)/scripts
 XMONADDIR = $(PREFIX)/.xmonad
 
-install: install_scripts install_config
-
-install_scripts:
-	@echo Installing xmonad scripts to $(BINDIR)/
-	@mkdir -p "$(BINDIR)"
-	@cp -f scripts/* $(BINDIR)/
-
-install_config:
+install:
 	@echo Installing xmonad config to $(XMONADDIR)/
 	@mkdir -p "$(XMONADDIR)"
-	@cp -f xmonad.hs "$(XMONADDIR)/"
+	@cp -f src/* "$(XMONADDIR)/"
 
-.PHONY: install_config install_scripts install
+.PHONY: install
