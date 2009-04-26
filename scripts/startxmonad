@@ -1,2 +1,3 @@
 #!/bin/sh
+~/.xmonad/init.sh
 exec dbus-launch --exit-with-session ssh-agent xmonad

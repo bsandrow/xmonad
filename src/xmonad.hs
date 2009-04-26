@@ -37,9 +37,11 @@ upperBarBgColor = "#333538"
 lowerBarFgColor = "#FFFFFF"
 lowerBarBgColor = "#111321"
 upperBarCmd     = "dzen2 -ta l -dock -h 20 -geometry -0+0   -bg '" ++ upperBarBgColor ++ "' -fg '" ++ upperBarFgColor ++ "' -fn '" ++ commonBarFont ++ "'" 
-lowerBarCmd     = "bash ~/scripts/xmonad-bottom-bar.sh | dzen2 -ta l -dock -h 14 -geometry +0+754 -bg '" ++ lowerBarBgColor ++ "' -fg '" ++ lowerBarFgColor ++ "' -fn '" ++ commonBarFont ++ "'"
+lowerBarCmd     = "bash ~/.xmonad/bottominfo.sh | dzen2 -ta l -dock -h 14 -geometry +0+754 -bg '" ++ lowerBarBgColor ++ "' -fg '" ++ lowerBarFgColor ++ "' -fn '" ++ commonBarFont ++ "'"
 trayKillCmd     = "kill -9 `ps -C stalonetray -o pid,user h|grep bjs|sed 's:^ *::g'|cut -d' ' -f1|awk '{ print $1\" \"; }'`"
 trayCmd         = "sleep 1 && stalonetray"
+-- can't use this b/c I don't want to relaunch everything on a reload of my xmonad.hs
+initCmd         = "/bin/sh ~/.xmonad/init.sh"
 
 ------------------------
 -- Custom KeyBindings --
