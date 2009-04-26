@@ -31,6 +31,3 @@ nautilus-show-desktop.sh OFF
     nm-applet&
     gnome-power-manager&
 ) &
-
-# xmonad, dbus and ssh-agent
-exec dbus-launch --exit-with-session ssh-agent xmonad
