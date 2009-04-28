@@ -3,8 +3,7 @@
 
 ### globals
 separator=" ^r(3x3) "
-dzen_bitmaps="$HOME/local/dzen_bitmaps"
-dzen_bitmaps2="$HOME/local/dzen_bitmaps2"
+bitmaps="$HOME/.xmonad/"
 
 ### email settings
 email_newmail_fgcolor='red'
@@ -58,7 +57,7 @@ function process_mailbox()
 
 function print_email()
 {
-    echo -n "^i($dzen_bitmaps/envelope.xbm) "
+    echo -n "^i($bitmaps/envelope.xbm) "
     process_mailbox "$HOME/mail/mlarc/Inbox" "inbox" 1
     echo -n " "
     process_mailbox "$HOME/mail/rtk/INBOX" "rtk" 1
@@ -67,7 +66,7 @@ function print_email()
 
 function print_clock()
 {
-    echo -n "^fg($clock_icon_color)^i($dzen_bitmaps2/clock.xbm)^fg($clock_fgcolor) "
+    echo -n "^fg($clock_icon_color)^i($bitmaps/clock.xbm)^fg($clock_fgcolor) "
     echo -n `date "$clock_format"`
     echo -n "^fg()"
 }

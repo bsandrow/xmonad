@@ -26,6 +26,7 @@ myNormalBorderColor     = "#202030"
 myFocusedBorderColor    = "#0A0AD0"
 myWorkspaces            = ["web","comm"] ++ map show [3..6]
 fullFloatOn             = 0
+bitmaps_dir             = "/home/bjs/.xmonad"
 
 ---------------------
 -- Execute Strings --
@@ -106,13 +107,13 @@ myOtherManageHook = composeOne [ isFullscreen -?> doFullFloat ]
 myDzenPP dzfh = defaultPP
             { ppCurrent             = wrap "^fg(#000000)^bg(#a3ef5d) " " ^fg()^bg()"
             , ppVisible             = wrap "^bg(grey30)^fg(grey75)" "^fg()^bg()"
-            , ppHidden              = wrap "^i(/home/bjs/local/dzen_bitmaps/has_win_nv.xbm)" " "
+            , ppHidden              = wrap "^i(" ++ bitmaps_dir ++ "/has_win_nv.xbm)" " "
             , ppHiddenNoWindows     = wrap " " " "
             , ppSep                 = " ^r(3x3) "
             , ppWsSep               = ""
             , ppLayout              = (\x -> case x of
-                                                "Tall"        -> "^i(/home/bjs/local/dzen_bitmaps/tall.xbm)"
-                                                "Mirror Tall" -> "^i(/home/bjs/local/dzen_bitmaps/mtall.xbm)"
+                                                "Tall"        -> "^i(" ++ bitmaps_dir ++ "/tall.xbm)"
+                                                "Mirror Tall" -> "^i(" ++ bitmaps_dir ++ "/mtall.xbm)"
                                                 x             -> x
                                       )
             , ppTitle               = dzenColor "#a3ef5d" "" . shorten 80
