@@ -47,17 +47,19 @@ function process_mailbox()
     new_mail=`get_new_mail "$mailbox"`
 #    all_mail=`get_all_mail "$mailbox"`
     ### output
+    output="$label:$new_mail^fg()"
     if [ $new_mail -ne 0 ] && [ $3 -eq 1 ]; then
-        echo -n "^fg($email_newmail_fgcolor)$label: $new_mail^fg()"
+        output="^fg($email_newmail_fgcolor)$output"
     else
-        echo -n "^fg($email_fgcolor)$label: $new_mail^fg()"
+        output="^fg($email_fgcolor)$output"
     fi
+    echo -n "$output"
 }
 
 function print_email()
 {
     echo -n "^i($dzen_bitmaps/envelope.xbm) "
-    process_mailbox "$HOME/mail/gmail/INBOX" "gmail" 1
+    process_mailbox "$HOME/mail/mlarc/Inbox" "inbox" 1
     echo -n " "
     process_mailbox "$HOME/mail/rtk/INBOX" "rtk" 1
 }
