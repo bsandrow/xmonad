@@ -45,12 +45,12 @@ function process_mailbox()
     mailbox="$1"; label="$2"; alerts_toggle=$3
     ### mail counts
     new_mail=`get_new_mail "$mailbox"`
-    all_mail=`get_all_mail "$mailbox"`
+#    all_mail=`get_all_mail "$mailbox"`
     ### output
     if [ $new_mail -ne 0 ] && [ $3 -eq 1 ]; then
-        echo -n "^fg($email_newmail_fgcolor)$label: $new_mail/$all_mail^fg()"
+        echo -n "^fg($email_newmail_fgcolor)$label: $new_mail^fg()"
     else
-        echo -n "^fg($email_fgcolor)$label: $new_mail/$all_mail^fg()"
+        echo -n "^fg($email_fgcolor)$label: $new_mail^fg()"
     fi
 }
 
