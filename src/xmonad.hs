@@ -44,9 +44,9 @@ trayCmd         = "sleep 1 && stalonetray"
 -- can't use this b/c I don't want to relaunch everything on a reload of my xmonad.hs
 initCmd         = "/bin/sh ~/.xmonad/init.sh"
 
-------------------------
--- Custom KeyBindings --
-------------------------
+-----------------
+-- KeyBindings --
+-----------------
 
 myModMask = mod4Mask
 altMask   = mod1Mask
@@ -78,26 +78,56 @@ myKeys conf =
 
 myKeysFunc x = M.union (M.fromList (myKeys x)) (keys defaultConfig x)
 
-------------------------------
--- Custom Window Management --
-------------------------------
+-----------------------
+-- Window Management --
+-----------------------
 
 myManageHook :: ManageHook
 myManageHook = composeAll
-    -- rules to float windows outside of tiling management
+    -- Legend:
+    --      sec1 -> rules for floating windows
+    --      sec2 -> rules for ignoring windows
+    --      sec3 -> rules for moving windows to workspaces
+    -- sec1 --
     [ className =? "XFontSel"                           --> doCenterFloat
     , className =? "Restart Firefox"                    --> doCenterFloat
     , title     =? "Firefox - Restore Previous Session" --> doFloat
     , title     =? "Firefox Preferences"                --> doFloat
-    -- rules to exclude windows from management
+    -- sec2 --
     , className =? "stalonetray"                        --> doIgnore
-    -- rules to automatically move windows to certain workspaces
+    -- sec3 --
     , className =? "Firefox"                            --> doF (S.shift "web")
     , className =? "Opera"                              --> doF (S.shift "web")
     , className =? "opera"                              --> doF (S.shift "web")
     ]
 
 myOtherManageHook = composeOne [ isFullscreen -?> doFullFloat ]
+
+-------------------
+-- Layout Config --
+-------------------
+--
+----- Sources
+--
+--  [1]: http://haskell.org/haskellwiki/Xmonad/Config_archive/enko's_xmonad.hs
+--  [2]: http://haskell.org/haskellwiki/Xmonad/Config_archive/andrewsw's_xmonad.hs_(0.8)
+--  [3]: http://haskell.org/haskellwiki/Xmonad/Config_archive/loupgaroublonds_xmonad.hs
+--
+myLayouts = avoidStruts $ comm all
+    where
+    -- Legend:
+    --      comm    => set of layouts to use on the 'comm' workspace
+    --      all     => set of layouts to use on the non-'limited' workspaces
+    --      tiled   => the 'Tall' layout called with non-default options
+    --      nmaster => the default # of windows in the master pane
+    --      delta   => the percent to +/- when resizing panes
+    --      ratio   => the proportion of the screen owned by the master pane
+    comm    = PW.onWorkspace "comm" ( Tall nmaster delta (71/100) ||| Full )
+    all     = tiled ||| Mirror tiled ||| Full
+    tiled   = Tall nmaster delta ratio
+    nmaster = 1
+    delta   = 3/100
+    ratio   = 1/2
 
 ----------------
 -- Custom Log --
@@ -137,7 +167,7 @@ main = do
         , normalBorderColor     = myNormalBorderColor
         , focusedBorderColor    = myFocusedBorderColor
         , modMask               = myModMask
-        , layoutHook            = avoidStruts $ layoutHook defaultConfig
+        , layoutHook            = myLayouts
         , manageHook            = manageDocks <+> myOtherManageHook <+> myManageHook <+> manageHook defaultConfig
         , logHook               = dynamicLogWithPP $ myDzenPP dzenproc
         }
