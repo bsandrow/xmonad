@@ -8,6 +8,7 @@ import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.ManageHelpers
 
+import qualified XMonad.Layout.PerWorkspace as PW
 import XMonad.Layout.WindowNavigation
 import XMonad.Layout.NoBorders
 
@@ -137,7 +138,7 @@ myLayouts = avoidStruts $ comm all
 myDzenPP dzfh = defaultPP
             { ppCurrent             = wrap "^fg(#000000)^bg(#a3ef5d) " " ^fg()^bg()"
             , ppVisible             = wrap "^bg(grey30)^fg(grey75)" "^fg()^bg()"
-            , ppHidden              = wrap "^i(" ++ bitmaps_dir ++ "/has_win_nv.xbm)" " "
+            , ppHidden              = wrap ("^i(" ++ bitmaps_dir ++ "/has_win_nv.xbm)") " "
             , ppHiddenNoWindows     = wrap " " " "
             , ppSep                 = " ^r(3x3) "
             , ppWsSep               = ""
