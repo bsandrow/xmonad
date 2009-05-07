@@ -124,6 +124,7 @@ myLayouts = avoidStruts $ comm all
     --      delta   => the percent to +/- when resizing panes
     --      ratio   => the proportion of the screen owned by the master pane
     comm    = PW.onWorkspace "comm" ( Tall nmaster delta (71/100) ||| Full )
+    web     = PW.onWorkspace "web"  ( Full ||| tiled )
     all     = tiled ||| Mirror tiled ||| Full
     tiled   = Tall nmaster delta ratio
     nmaster = 1
