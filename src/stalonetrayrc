@@ -7,7 +7,7 @@
 #background          "#EDECEB"
 background          "#333538"
 decorations         none
-geometry            150x20-2+2
+geometry            150x20+1450+2
 fuzzy_edges         0
 icon_size           16
 ignore_icon_resize  false
