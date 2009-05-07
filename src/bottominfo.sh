@@ -16,11 +16,13 @@ clock_format="+%a %b %d %Y, %k:%M (%Z)"
 
 ### dzen settings
 dzen_height=14
+dzen_width=1024
 dzen_justify='l'
 dzen_fgcolor='#FFFFFF'
 dzen_bgcolor='#111321'
 dzen_font='-*-terminus-*-r-*-*-12-*-*-*-*-*-*-*'
 dzen_geometry='+0+754'
+dzen_xinerama=1
 
 function get_mail_count()
 {
@@ -149,4 +151,10 @@ do
     sleep $interval &
     echo $! > $sleep_pid_file
     wait
-done | dzen2 -ta $dzen_justify -dock -h $dzen_height -geometry $dzen_geometry -fg $dzen_fgcolor -bg $dzen_bgcolor -fn $dzen_font
+done | dzen2 -ta $dzen_justify -dock -h $dzen_height \
+                                    -geometry $dzen_geometry \
+                                    -fg $dzen_fgcolor \
+                                    -bg $dzen_bgcolor \
+                                    -fn $dzen_font \
+                                    -xs $dzen_xinerama \
+                                    -w $dzen_width
