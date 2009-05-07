@@ -88,6 +88,7 @@ function print_clock()
 # xypher)
 
 pid_file="$HOME/.xmonad/`basename $0`.pid"
+sleep_pid_file="$HOME/.xmoand/`basename $0`.sleep.pid"
 if [ -f $pid_file ]; then
     pid=`cat $pid_file`
     if [ -d /proc/$pid ]; then
@@ -138,5 +139,14 @@ do
             interval=$i
         fi
     done
-    sleep $interval
+
+    ### Sleep
+    # sleep for the next interval, but dump the pid of the sleep process to a
+    # file so that if we want to kill the script we don't have to wait for the
+    # script to wakeup from the sleep process (can kill both the parent and the
+    # child processes)
+
+    sleep $interval &
+    echo $! > $sleep_pid_file
+    wait
 done | dzen2 -ta $dzen_justify -dock -h $dzen_height -geometry $dzen_geometry -fg $dzen_fgcolor -bg $dzen_bgcolor -fn $dzen_font
