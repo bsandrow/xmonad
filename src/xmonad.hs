@@ -159,7 +159,7 @@ myDzenPP dzfh = defaultPP
 -- Main Function Definition --
 ------------------------------
 main = do
-    dzenproc <- spawnPipe upperBarCmd
+    dzenproc <- spawnPipe wmInfoBarCmd
     xmonad $ defaultConfig
         { keys                  = myKeysFunc
         , terminal              = myTerminal
