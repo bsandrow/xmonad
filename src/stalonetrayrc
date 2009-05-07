@@ -1,0 +1,22 @@
+# vim:filetype=config:tw=80:et
+#
+# Source:
+#   http://bbs.archlinux.org/viewtopic.php?id=39723
+#
+
+#background          "#EDECEB"
+background          "#333538"
+decorations         none
+geometry            150x20-2+2
+fuzzy_edges         0
+icon_size           16
+ignore_icon_resize  false
+max_width           150
+max_height          20
+parent_bg           false
+respect_icon_hints  false
+transparent         false
+vertical            false
+icon_gravity        NE
+grow_gravity        NE
+window_type         dock

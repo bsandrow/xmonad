@@ -2,6 +2,7 @@
 
 ### Init Vars
 traycmd=`which stalonetray`
+trayopts="-c $HOME/.xmonad/stalonetrayrc"
 pid_file="$HOME/.xmonad/`basename $0`.pid"
 e_cmdnoexec=2
 e_alreadyrunning=3
@@ -24,7 +25,7 @@ if [ -f $pid_file ]; then
 fi
 
 ### Run the command
-$traycmd &
+$traycmd $trayopts&
 echo $! > $pid_file
 wait
 
