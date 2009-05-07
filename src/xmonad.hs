@@ -33,10 +33,18 @@ bitmaps_dir             = "/home/bjs/.xmonad"
 -- Execute Strings --
 ---------------------
 
-commonBarFont   = "-*-terminus-*-r-*-*-12-*-*-*-*-*-*-*"
-upperBarFgColor = "#FFFFFF"
-upperBarBgColor = "#333538"
-upperBarCmd     = "dzen2 -ta l -dock -h 20 -geometry -0+0   -bg '" ++ upperBarBgColor ++ "' -fg '" ++ upperBarFgColor ++ "' -fn '" ++ commonBarFont ++ "' -e 'onstart=lower'" 
+commonBarFont    = "-*-terminus-*-r-*-*-12-*-*-*-*-*-*-*"
+wmInfoBarFgColor = "#FFFFFF"
+wmInfoBarBgColor = "#333538"
+wmInfoBarWidth   = "1024"
+wmInfoBarScreen  = "1"
+wmInfoBarCmd     = "dzen2 -ta l -dock -h 20 -geometry -0+0"
+                        ++ " -w " ++ wmInfoBarWidth
+                        ++ " -bg '" ++ wmInfoBarBgColor ++ "'"
+                        ++ " -fg '" ++ wmInfoBarFgColor ++ "'"
+                        ++ " -fn '" ++ commonBarFont    ++ "'"
+                        ++ " -e 'onstart=lower'"
+                        ++ " -xs " ++ wmInfoBarScreen
 -- can't use this b/c I don't want to relaunch everything on a reload of my xmonad.hs
 initCmd         = "/bin/sh ~/.xmonad/init.sh"
 
