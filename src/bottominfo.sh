@@ -14,6 +14,14 @@ clock_fgcolor='#55CC55'
 clock_icon_color='#FFFFFF'
 clock_format="+%a %b %d %Y, %k:%M (%Z)"
 
+### dzen settings
+dzen_height=14
+dzen_justify='l'
+dzen_fgcolor='#FFFFFF'
+dzen_bgcolor='#111321'
+dzen_font='-*-terminus-*-r-*-*-12-*-*-*-*-*-*-*'
+dzen_geometry='+0+754'
+
 function get_mail_count()
 {
     if [ -d "$1" ]; then
@@ -71,6 +79,30 @@ function print_clock()
     echo -n "^fg()"
 }
 
+######                ######
+###    PID PROCESSING    ###
+######                ######
+
+# note: This will prevent bottominfo.sh from running when there are two
+# instances of X (i.e. if a second instance of xmonad is running in xnest of
+# xypher)
+
+pid_file="$HOME/.xmonad/`basename $0`.pid"
+if [ -f $pid_file ]; then
+    pid=`cat $pid_file`
+    if [ -d /proc/$pid ]; then
+        echo "Already running an instance of `basename $0`" >&2
+        exit 1
+    fi
+    echo "removing stale pid file"
+    rm $pid_file
+fi
+echo $$ > $pid_file
+
+######           ######
+###    MAIN LOOP    ###
+######           ######
+
 count=0
 interval=0
 intervals=(0 0)
@@ -107,4 +139,4 @@ do
         fi
     done
     sleep $interval
-done
+done | dzen2 -ta $dzen_justify -dock -h $dzen_height -geometry $dzen_geometry -fg $dzen_fgcolor -bg $dzen_bgcolor -fn $dzen_font
