@@ -16,13 +16,13 @@ clock_format="+%a %b %d %Y, %k:%M (%Z)"
 
 ### dzen settings
 dzen_height=14
-dzen_width=1024
+dzen_width=1600
 dzen_justify='l'
 dzen_fgcolor='#FFFFFF'
 dzen_bgcolor='#111321'
 dzen_font='-*-terminus-*-r-*-*-12-*-*-*-*-*-*-*'
-dzen_geometry='+0+754'
-dzen_xinerama=1
+dzen_geometry='+0-0'
+dzen_xinerama=2
 
 function get_mail_count()
 {
