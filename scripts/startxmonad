@@ -1,3 +1,4 @@
 #!/bin/sh
 ~/.xmonad/init.sh
-exec dbus-launch --exit-with-session ssh-agent xmonad
+dbus-launch --exit-with-session ssh-agent xmonad
+kill -9 `cat ~/.xmonad/bottominfo.sh.pid` `cat ~/.xmonad/bottominfo.sh.sleep.pid`
