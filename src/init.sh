@@ -1,12 +1,19 @@
 #!/bin/sh
 
-# urxvt daemon
-urxvtd -o -q -f
+######
+###    init vars
+######
+xmonad_dir="$HOME/.xmonad"
 
-# xscreensaver
+######
+###    background processes
+######
+urxvtd -o -q -f
 xscreensaver &
 
-# gpg agent
+######
+###    gpg agent
+######
 GPG_AGENT_INFO_FILE="$HOME/.gpg-agent-info"
 if [ -f "$GPG_AGENT_INFO_FILE" ] && [ ! -r "$GPG_AGENT_INFO_FILE" ]; then
     echo "'$GPG_AGENT_INFO_FILE' exists but is unreadable. Aborting gpg-agent launch..."
@@ -18,16 +25,29 @@ else
     echo $GPG_AGENT_INFO >$GPG_AGENT_INFO_FILE
 fi
 
-# make sure nautilus doesn't want to draw the desktop if I launch it
+######
+###    settings
+######
 nautilus-show-desktop.sh OFF
-
-# background image
 [ -e $HOME/.fehbg ]; eval "`cat $HOME/.fehbg | egrep '^feh .*--bg-' | sed 's:^\\([^;|&]*\\).*$:\1:'`"
 
-# systray apps
+######
+###    systray apps
+######
 (
-    sleep 2s
+    $xmonad_dir/traycmd.sh&
+    sleep .5
     update-notifier&
     nm-applet&
     gnome-power-manager&
 ) &
+
+######
+###    info bar
+######
+$xmonad_dir/bottominfo.sh &
+
+######
+###    per host custom items
+######
+source "$xmonad_dir/`hostname`"
