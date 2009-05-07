@@ -36,7 +36,7 @@ bitmaps_dir             = "/home/bjs/.xmonad"
 commonBarFont   = "-*-terminus-*-r-*-*-12-*-*-*-*-*-*-*"
 upperBarFgColor = "#FFFFFF"
 upperBarBgColor = "#333538"
-upperBarCmd     = "dzen2 -ta l -dock -h 20 -geometry -0+0   -bg '" ++ upperBarBgColor ++ "' -fg '" ++ upperBarFgColor ++ "' -fn '" ++ commonBarFont ++ "'" 
+upperBarCmd     = "dzen2 -ta l -dock -h 20 -geometry -0+0   -bg '" ++ upperBarBgColor ++ "' -fg '" ++ upperBarFgColor ++ "' -fn '" ++ commonBarFont ++ "' -e 'onstart=lower'" 
 -- can't use this b/c I don't want to relaunch everything on a reload of my xmonad.hs
 initCmd         = "/bin/sh ~/.xmonad/init.sh"
 
@@ -119,7 +119,6 @@ myLayouts = avoidStruts $ comm all
     --      delta   => the percent to +/- when resizing panes
     --      ratio   => the proportion of the screen owned by the master pane
     comm    = PW.onWorkspace "comm" ( Tall nmaster delta (71/100) ||| Full )
-    web     = PW.onWorkspace "web"  ( Full ||| tiled )
     all     = tiled ||| Mirror tiled ||| Full
     tiled   = Tall nmaster delta ratio
     nmaster = 1
@@ -133,7 +132,7 @@ myLayouts = avoidStruts $ comm all
 -- I want to move the logHook definition here if possible
 myDzenPP dzfh = defaultPP
             { ppCurrent             = wrap "^fg(#000000)^bg(#a3ef5d) " " ^fg()^bg()"
-            , ppVisible             = wrap "^bg(grey30)^fg(grey75)" "^fg()^bg()"
+            , ppVisible             = wrap "^bg(grey30)^fg(grey75) " " ^fg()^bg()"
             , ppHidden              = wrap ("^i(" ++ bitmaps_dir ++ "/has_win_nv.xbm)") " "
             , ppHiddenNoWindows     = wrap " " " "
             , ppSep                 = " ^r(3x3) "
