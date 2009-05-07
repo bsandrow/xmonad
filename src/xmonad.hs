@@ -36,7 +36,7 @@ bitmaps_dir             = "/home/bjs/.xmonad"
 commonBarFont    = "-*-terminus-*-r-*-*-12-*-*-*-*-*-*-*"
 wmInfoBarFgColor = "#FFFFFF"
 wmInfoBarBgColor = "#333538"
-wmInfoBarWidth   = "1024"
+wmInfoBarWidth   = "1600"
 wmInfoBarScreen  = "1"
 wmInfoBarCmd     = "dzen2 -ta l -dock -h 20 -geometry -0+0"
                         ++ " -w " ++ wmInfoBarWidth
