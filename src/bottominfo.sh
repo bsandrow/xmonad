@@ -58,7 +58,7 @@ function process_mailbox()
 function print_email()
 {
     echo -n "^i($bitmaps/envelope.xbm) "
-    process_mailbox "$HOME/mail/mlarc/Inbox" "inbox" 1
+    process_mailbox "$HOME/mail/Inbox" "inbox" 1
     echo -n " "
     process_mailbox "$HOME/mail/rtk/INBOX" "rtk" 1
 }
