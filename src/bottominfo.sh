@@ -90,7 +90,7 @@ function print_clock()
 # xypher)
 
 pid_file="$HOME/.xmonad/`basename $0`.pid"
-sleep_pid_file="$HOME/.xmoand/`basename $0`.sleep.pid"
+sleep_pid_file="$HOME/.xmonad/`basename $0`.sleep.pid"
 if [ -f $pid_file ]; then
     pid=`cat $pid_file`
     if [ -d /proc/$pid ]; then
