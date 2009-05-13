@@ -30,6 +30,9 @@ fi
 ######
 nautilus-show-desktop.sh OFF
 [ -e $HOME/.fehbg ]; eval "`cat $HOME/.fehbg | egrep '^feh .*--bg-' | sed 's:^\\([^;|&]*\\).*$:\1:'`"
+xrdb -merge ~/code/urxvt-colors/robm-dark
+xrdb -merge ~/code/urxvt-colors/robm-dark.xmutt
+
 
 ######
 ###    systray apps
