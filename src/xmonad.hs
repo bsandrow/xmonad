@@ -117,7 +117,7 @@ myOtherManageHook = composeOne [ isFullscreen -?> doFullFloat ]
 --  [2]: http://haskell.org/haskellwiki/Xmonad/Config_archive/andrewsw's_xmonad.hs_(0.8)
 --  [3]: http://haskell.org/haskellwiki/Xmonad/Config_archive/loupgaroublonds_xmonad.hs
 --
-myLayouts = avoidStruts $ comm all
+myLayouts = smartBorders . avoidStruts $ comm all
     where
     -- Legend:
     --      comm    => set of layouts to use on the 'comm' workspace
